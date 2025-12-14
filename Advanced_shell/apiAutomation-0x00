@@ -1,0 +1,16 @@
+#!/bin/bash
+
+pokemon_api_url="https://pokeapi.co/api/v2/pokemon"
+pokemon_name="Pikachu"
+url="$pokemon_api_url/$pokemon_name"
+
+data_file="data.json"
+error_log="errors.txt"
+
+curl -s $url -o $data_file 2> $error_log
+
+if [ $? -ne 0 ]; then
+    echo "Error occured while making the request to $url, check $error_log for the error log."
+else
+    echo "Successfully retrieved data for the Pokemon named '$pokemon_name' from $url ..."
+fi
