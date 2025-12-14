@@ -1,8 +1,8 @@
 #!/bin/bash
 
-pokemon_api_url="https://pokeapi.co/api/v2/pokemon"
+pokemon_api_url="https://pokeapi.co/api/v2/pokemon/"
 pokemon_name="Pikachu"
-url="$pokemon_api_url/$pokemon_name"
+url="$pokemon_api_url$pokemon_name"
 
 data_file="data.json"
 error_log="errors.txt"
