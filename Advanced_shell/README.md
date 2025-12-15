@@ -65,3 +65,21 @@ ghostmode@GhostMode:~$ jq . < data.json | head -n 50
         "url": "https://pokeapi.co/api/v2/version/3/"
 ghostmode@GhostMode:~$
 ```
+## 1. Extract Pokémon Data
+
+**Objective**: Use advanced text manipulation tools (jq, awk, sed) to extract specific data from the API response.
+
+Instructions:
+
+- Write a script that extracts the Pokémon’s name, height, weight, and type from the JSON file created in Task 0.
+
+- Format the output in a human-readable way,“Pikachu is of type Electric, weighs 6kg, and is 0.4m tall.”
+
+- You should only use these commands: jq, awk, sed
+
+**Sample Output**:
+```bash
+ghostmode@GhostMode:~$ ./parse_pikachu
+Pikachu is of type Electric, weighs 6kg, and is 0.4m tall.
+ghostmode@GhostMode:~$
+```

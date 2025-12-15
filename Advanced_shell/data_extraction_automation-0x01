@@ -1,0 +1,12 @@
+#!/bin/bash
+
+capitalize() {
+    echo "$1" | awk '{print toupper(substr($0,1,1))substr($0,2)}'
+}
+
+pokemon_name=$(jq -r ".name" < data.json)
+pokemon_height=$(jq -r ".height" < data.json)
+pokemon_weight=$(jq -r ".weight" < data.json)
+pokemon_type=$(jq -r ".types[].type.name" < data.json)
+
+echo "$(capitalize $pokemon_name) is of type $(capitalize $pokemon_type), weighs ${pokemon_weight}kg, and is ${pokemon_height}m tall."
