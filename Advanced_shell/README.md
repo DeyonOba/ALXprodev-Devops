@@ -83,3 +83,62 @@ ghostmode@GhostMode:~$ ./parse_pikachu
 Pikachu is of type Electric, weighs 6kg, and is 0.4m tall.
 ghostmode@GhostMode:~$
 ```
+
+## 2. Batch Pokémon Data Retrieval
+
+**Objective**: Automate the retrieval of data for multiple Pokémon and store it in separate files.
+
+**Instructions**:
+
+- Create a script that loops through a list of Pokémon [Bulbasaur, Ivysaur, Venusaur, Charmander, Charmeleon]
+
+- For each Pokémon, retrieve its data from the API and save it to a separate file named after the Pokémon (e.g., pikachu.json, bulbasaur.json…).
+
+- Handle any potential rate-limiting issues by adding a delay between requests.
+
+**Sample Output**:
+```bash
+ghostmode@GhostMode:~$ ./fetch_multiple_pokemon
+Fetching data for bulbasaur...
+Saved data to pokemon_data/bulbasaur.json ✅
+Fetching data for ivysaur...
+Saved data to pokemon_data/ivysaur.json ✅
+Fetching data for venusaur...
+Saved data to pokemon_data/venusaur.json ✅
+Fetching data for charmander...
+Saved data to pokemon_data/charmander.json ✅
+Fetching data for charmeleon...
+Saved data to pokemon_data/charmeleon.json ✅
+ghostmode@GhostMode:~$ jq . < pokemon_data/bulbasaur.json | head -n 30
+{
+  "abilities": [
+    {
+      "ability": {
+        "name": "overgrow",
+        "url": "https://pokeapi.co/api/v2/ability/65/"
+      },
+      "is_hidden": false,
+      "slot": 1
+    },
+    {
+      "ability": {
+        "name": "chlorophyll",
+        "url": "https://pokeapi.co/api/v2/ability/34/"
+      },
+      "is_hidden": true,
+      "slot": 3
+    }
+  ],
+  "base_experience": 64,
+  "cries": {
+    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/1.ogg",
+    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/1.ogg"
+  },
+  "forms": [
+    {
+      "name": "bulbasaur",
+      "url": "https://pokeapi.co/api/v2/pokemon-form/1/"
+    }
+  ],
+ghostmode@GhostMode:~$
+```
