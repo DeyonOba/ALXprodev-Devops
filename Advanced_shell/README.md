@@ -142,3 +142,31 @@ ghostmode@GhostMode:~$ jq . < pokemon_data/bulbasaur.json | head -n 30
   ],
 ghostmode@GhostMode:~$
 ```
+## 3. Summarize Pokémon Data
+
+**Objective**: Create a report that summarizes data for multiple Pokémon.
+
+**Instructions**:
+
+Write a shell script that reads all the JSON files generated in Task 2 and extracts the name, height, and weight of each Pokémon.
+
+Generate a CSV file containing the Pokémon’s name, height, and weight.
+
+Use awk to calculate the average height and weight of all Pokémon in the report.
+
+**Sample Output**:
+```bash
+ghostmode@GhostMode:~$ ./pokemon_report
+CSV Report generated at: pokemon_report.csv
+
+Name,Height (m),Weight (kg)
+Bulbasaur,0.7,6.9
+Charmander,0.6,8.5
+Charmeleon,1.1,19.0
+Ivysaur,1.0,13.0
+Venusaur,2.0,100.0
+
+Average Height: 1.08 m
+Average Weight: 29.48 kg
+ghostmode@GhostMode:~$
+```

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+DATA_DIR="pokemon_data"
+OUTPUT_FILE="pokemon_report.csv"
+
+
+capitalize() {
+    echo "$1" | awk '{print toupper(substr($0,1,1)) tolower(substr($0,2))}'
+}
+
+generate_csv() {
+    echo "Name,Height (m),Weight (kg)" > $OUTPUT_FILE
+
+    for file in $(ls $DATA_DIR/*.json); do
+        name=$(jq -r '.name' $file)
+        height=$(jq -r '.height' $file)
+        weight=$(jq -r '.weight' $file)
+
+        echo "$(capitalize $name),${height},${weight}" >> $OUTPUT_FILE
+    done
+
+    echo "CSV summary generated at $OUTPUT_FILE"
+}
+
+main() {
+    echo "Setting up utils ..."
+
+    if [ ! -d $DATA_DIR ]; then
+        echo "Data directory $DATA_DIR not found! Running the data fetching script ..."
+        source batchProcessing-0x02
+    fi
+
+    echo "Generating CSV summary ..."
+    generate_csv
+
+    echo "Calculating averages ..."
+    printf "\n>>>>>> OUTPUT SUMMARY <<<<<<\n\n"
+    awk -F ',' '
+    BEGIN { n = -1 } 
+    { print; avg_height += ($2/10); avg_weight += $3; n +=1} 
+    END { printf "\nAverage Height: %s m\nAverage Weight: %s kg\n", avg_height/n, avg_weight/n }
+    ' pokemon_report.csv
+}
+
+main
+echo "Summary generation completed."
