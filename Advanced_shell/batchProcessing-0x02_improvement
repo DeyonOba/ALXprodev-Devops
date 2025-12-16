@@ -1,0 +1,47 @@
+#!/bin/bash
+
+POKEMON_API_URL="https://pokeapi.co/api/v2/pokemon"
+ERROR_LOG="errors.txt"
+DATA_DIR="pokemon_data"
+DEFAULT_DELAY=5
+N_RETRIES=3
+
+setup_utils() {
+    if [ -f $ERROR_LOG ]; then
+        rm $ERROR_LOG
+    fi
+
+    if [ ! -d $DATA_DIR ]; then
+        mkdir -p $DATA_DIR
+    fi
+}
+
+request_pokemon() {
+    echo "Fetching data for $1..."
+    http_status_code=$(curl -s -o "${DATA_DIR}/${1}.json" -w "%{http_code}" "${POKEMON_API_URL}/${1}" 2>> $ERROR_LOG)
+    echo $http_status_code
+    number_of_retries=$(($2 - 1))
+
+    if [ $http_status_code -ne 200 -a $number_of_retries -ge 0 ]; then
+        echo "Error occurred while fetching data for $1, check $ERROR_LOG for the error logs."
+        echo "$(($N_RETRIES - $number_of_retries)):: Retrying ..."
+        sleep 1
+        request_pokemon $1 $number_of_retries
+    else
+        echo "Saved data to ${DATA_DIR}/${1}.json ✅"
+    fi
+}
+
+main() {
+    echo "Setting up utils ..."
+    setup_utils
+
+    array=("bulbasaur" "ivysaur" "venusaur" "charmander" "charmeleon")
+    for name in ${array[@]}; do
+        request_pokemon $name $N_RETRIES
+        sleep $DEFAULT_DELAY
+    done
+}
+
+main
+echo "All requests completed."
